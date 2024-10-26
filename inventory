@@ -1,6 +1,6 @@
-192.168.85.131
-192.168.85.133
-192.168.85.135 
+192.168.85.131 ansible_user=ansible1
+192.168.85.133 ansible_user=ansible3
+192.168.85.135 ansible_user=dhayanidhi
 
 
 
