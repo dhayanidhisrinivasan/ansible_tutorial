@@ -4,19 +4,30 @@
   become: true
   pre_tasks:
  
-  - name: install updates (CentOS)
+  - name: update repo cache (CentOS)
     tags: always
     dnf:
-      update_only: yes
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "CentOS"
 
-  - name: install updates(Ubuntu) 
+  - name: update repo cache(Ubuntu) 
     tags: always
     apt:
-      upgrade: dist
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "Ubuntu"
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: add ssh key to simone user
+      tags: always
+      authorized_key:
+        user: simone
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1YPHAL8GPc2FS5tNh57uaVkDj6+V39SqveziKg2g+On1srOuCVQPXqcwavK5+VQ+lK64PGPhzJ/k23ai3OLr1SF0MZEqn4T5g4xb5q6qkYly60EhtaR9vcEBYkLjkWVnt37PLEYGItqjiwD8q/GwR/McoV8XGfzTObYHoPGMdV5yh8G+vGHUvJrW3ccxpqK+N0sE4dXi8M7P9N6Qhlbyrpz1FEHvIS62lEY+0syTlbUNduXzlru4TQ0vwHYGictvAl08riEEvQLQ826/R90KAW3Gav+UPQI08Pf16B/LNx7Nsq7ucyJDqkJuUSOz/4Dzu9+/BnyMTO6ug33FME5Bj dhayanidhi@ubuntu
+"
 
 - hosts: workstations
   become: true
@@ -35,10 +46,6 @@
       owner: root
       group: root
 
-
-
-
-
 - hosts: web_servers
   become: true
   tasks:  
@@ -54,14 +61,38 @@
 
 
   - name: install httpd and php for CentOS
-    tags: httpd,php,CentOS 
+    tags: httpd,php,CentOS,apache2
     dnf:
       name:
         - httpd
         - php
       state: latest
     when: ansible_distribution == "CentOS"   
- 
+  
+  - name: start httpd service for CentOS
+    tags: httpd,apache2,CentOS
+    service:
+      name: httpd
+      state: started
+    when: ansible_distribution == "CentOS"
+
+
+  - name: change email addres for admin
+    tags: httpd,apache,CentOS
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin dhayadhaya1707@gmail.com
+    when: ansible_distribution == "CentOS"
+    register: httpd
+
+
+  - name: restart the service
+    tags: httpd,apache,CentOS
+    service: 
+      name: httpd
+      state: restarted
+    when: httpd.changed 
 
   - name: copy default html file for site
     tags: apache,apache2,httpd
