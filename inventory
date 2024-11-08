@@ -1,15 +1,15 @@
 [web_servers]
-192.168.85.131 ansible_user=simone apache_package=apache2 php_package=libapache2-mod-php
-192.168.85.133 ansible_user=simone apache_package=apache2 php_package=libapache2-mod-php
-192.168.85.135 ansible_user=simone apache_package=httpd php_package=php
+192.168.85.131 ansible_user=simone 
+192.168.85.133 ansible_user=simone 
+192.168.85.135 ansible_user=simone 
 [db_servers]
-192.168.85.133 ansible_user=simone apache_package=apache2 php_package=libapache2-mod-php
-192.168.85.135 ansible_user=simone apache_package=httpd php_package=php
+192.168.85.133 ansible_user=simone
+192.168.85.135 ansible_user=simone
 [file_servers]
-192.168.85.133 ansible_user=simone apache_package=apache2 php_package=libapache2-mod-php
-192.168.85.135 ansible_user=simone apache_package=httpd php_package=php
+192.168.85.133 ansible_user=simone
+192.168.85.135 ansible_user=simone
 [workstations]
 192.168.85.130 ansible_user=simone
 [managed_nodes]
-192.168.85.131 ansible_user=simone apache_package=apache2 php_package=libapache2-mod-php
+192.168.85.131 ansible_user=simone
 

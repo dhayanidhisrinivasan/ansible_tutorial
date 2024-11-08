@@ -1,0 +1,6 @@
+apache_package_name: httpd
+php_package_name: php
+apache_service: httpd
+ssh_users: "dhayanidhi simone ansible1 ansible3"
+ssh_template_file: sshd_config_CentOS.j2
+

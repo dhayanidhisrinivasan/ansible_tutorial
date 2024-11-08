@@ -3,3 +3,13 @@
     user: simone
     key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1YPHAL8GPc2FS5tNh57uaVkDj6+V39SqveziKg2g+On1srOuCVQPXqcwavK5+VQ+lK64PGPhzJ/k23ai3OLr1SF0MZEqn4T5g4xb5q6qkYly60EhtaR9vcEBYkLjkWVnt37PLEYGItqjiwD8q/GwR>
 "
+
+- name: generate sshd_config file 
+  tags: ssh
+  template:
+    src: "{{ssh_template_file}}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd
